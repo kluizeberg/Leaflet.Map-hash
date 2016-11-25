@@ -11,7 +11,7 @@ Tested with Leaflet 0.7.7 and 1.0.2.
 
 ## Demo
 
-See https://kluizeberg.gihub.io/Leaflet.Map-hash/demo.html#lng=-5.71496;lat=50.06582;zoom=10 (map centered on Land's End).
+See https://kluizeberg.github.io/Leaflet.Map-hash/demo.html#lng=-5.71496;lat=50.06582;zoom=10 (map centered on Land's End).
 
 ## Installation and usage
 
