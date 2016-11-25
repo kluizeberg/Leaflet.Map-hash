@@ -19,7 +19,7 @@ See https://kluizeberg.gihub.io/Leaflet.Map-hash/demo.html#lng=-5.71496;lat=50.0
 2. load `leaflet.map-hash.js`
 3. create a `L.Map` instance with option `urlHash` set to `true`.
 
-See also `demo.html`. Linking several maps in one document to the hash may result in unexpected behaviour.
+See also [`demo.html`](https://github.com/kluizeberg/Leaflet.Map-hash/blob/master/demo.html). Linking several maps in one document to the hash may result in unexpected behaviour.
 
 ## API Reference
 
