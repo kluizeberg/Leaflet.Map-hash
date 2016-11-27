@@ -1,7 +1,5 @@
 /*
  * leaflet.map-hash.js
- *
- * Leaflet map and document URL hash ("#lng=<lng>;lat=<lat>;zoom=<zoom>") interface.
  */
 
 L.Map.mergeOptions({
