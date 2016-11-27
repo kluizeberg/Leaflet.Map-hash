@@ -9,9 +9,7 @@ Panning and/or zooming the map results in a hash transparently formatted as `#ln
 
 Tested with Leaflet 0.7.7 and 1.0.2.
 
-## Demo
-
-See https://kluizeberg.github.io/Leaflet.Map-hash/demo.html#lng=-5.71496;lat=50.06582;zoom=10 (map centered on Land's End).
+Demo: https://kluizeberg.github.io/Leaflet.Map-hash/demo.html#lng=-5.71496;lat=50.06582;zoom=10 (map centered on Land's End).
 
 ## Installation and usage
 
@@ -25,14 +23,14 @@ See also [`demo.html`](https://github.com/kluizeberg/Leaflet.Map-hash/blob/maste
 
 This plugin alters, albeit slightly, Leaflet's main class `L.Map` and adds a function to utility class `L.Util`.
 
-[`L.Map`](http://leafletjs.com/reference-1.0.2.html#map)-**additions**:
+### [`L.Map`](http://leafletjs.com/reference-1.0.2.html#map) *additions*:
 
 | Option | Type | Default | Description |
-| --- | --- | --- | --- |
+| :----- | :--- | :------ | :---------- |
 | `urlHash` | `Boolean` | `false` | Set to `true` to enable URL hash interaction. |
 
-[`L.Util`](http://leafletjs.com/reference-1.0.2.html#util)-**additions**:
+### [`L.Util`](http://leafletjs.com/reference-1.0.2.html#util) *additions*:
 
 | Function | Returns | Description |
-| --- | --- | --- |
-| `parseParamString(<String> str)` | `Object` | Inverse of [`getParamString`](http://leafletjs.com/reference-1.0.2.html#util-getparamstring) where parameters are separated by `;` or `&` |
+| :------- | :------ | :---------- |
+| `parseParamString(<String> str)` | `Object` | Inverse of [`getParamString`](http://leafletjs.com/reference-1.0.2.html#util-getparamstring), parameters to be separated by `;` or `&`. |
