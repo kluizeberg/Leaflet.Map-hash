@@ -17,9 +17,9 @@ L.Map.include({
 		}
 
 		if (isNum(hash.lng) && isNum(hash.lat)) {
-			center = L.latLng([hash.lat, hash.lng]);
+			center = new L.LatLng(hash.lat, hash.lng);
 		} else if (isNum(hash.lon) && isNum(hash.lat)) { // lon as lng
-			center = L.latLng([hash.lat, hash.lon]);
+			center = new L.LatLng(hash.lat, hash.lon);
 		} else if (isNum(hash.x) && isNum(hash.y)) { // cartesian coordinates
 			center = this.options.crs.unproject(L.point(hash.x, hash.y));
 		}
