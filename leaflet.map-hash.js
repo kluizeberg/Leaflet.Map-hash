@@ -8,9 +8,9 @@ L.Map.mergeOptions({
 
 L.Map.include({
 	_onHashChange: function () {
-		var center = this.getCenter(),
-		    zoom = this.getZoom(),
-		    hash = L.Util.parseParamString(window.location.hash.slice(1));
+		var center = this.getCenter();
+		var zoom = this.getZoom();
+		var hash = L.Util.parseParamString(window.location.hash.slice(1));
 
 		function isNum(n) {
 			return typeof n === 'number';
@@ -21,7 +21,7 @@ L.Map.include({
 		} else if (isNum(hash.lon) && isNum(hash.lat)) { // lon as lng
 			center = new L.LatLng(hash.lat, hash.lon);
 		} else if (isNum(hash.x) && isNum(hash.y)) { // cartesian coordinates
-			center = this.options.crs.unproject(L.point(hash.x, hash.y));
+			center = this.options.crs.unproject(new L.Point(hash.x, hash.y));
 		}
 		if (isNum(hash.zoom)) {
 			zoom = hash.zoom;
@@ -36,9 +36,9 @@ L.Map.addInitHook(function () {
 			L.DomEvent.on(window, 'hashchange', this._onHashChange, this);
 
 			this.on('moveend', function () {
-				var center = this.getCenter(),
-				    zoom = this.getZoom(),
-				    decimals = 5;
+				var center = this.getCenter();
+				var zoom = this.getZoom();
+				var decimals = 5;
 
 				window.history.replaceState(null, '', '#' + [ // no history
 					'lng='  + center.lng.toFixed(decimals),
