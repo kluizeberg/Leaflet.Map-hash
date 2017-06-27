@@ -8,9 +8,9 @@ L.Map.mergeOptions({
 
 L.Map.include({
 	_onHashChange: function () {
-		var center = this.getCenter();
-		var zoom = this.getZoom();
+		var center;
 		var hash = L.Util.parseParamString(window.location.hash.slice(1));
+		var zoom;
 
 		function isNum(n) {
 			return typeof n === 'number';
@@ -22,10 +22,16 @@ L.Map.include({
 			center = new L.LatLng(hash.lat, hash.lon);
 		} else if (isNum(hash.x) && isNum(hash.y)) { // cartesian coordinates
 			center = this.options.crs.unproject(new L.Point(hash.x, hash.y));
+		} else {
+			center = this.getCenter();
 		}
+
 		if (isNum(hash.zoom)) {
 			zoom = hash.zoom;
+		} else {
+			zoom = this.getZoom();
 		}
+
 		this.setView(center, zoom);
 	}
 });
@@ -56,7 +62,7 @@ L.Map.addInitHook(function () {
 
 /* L.Util helper method */
 
-L.Util.parseParamString = function (str) { // key=value;k2=v2&k3=v3
+L.Util.parseParamString = function (str, result) { // key=value;k2=v2&k3=v3
 	function parse(s) {
 		switch (s) {
 			case 'null':
@@ -71,7 +77,7 @@ L.Util.parseParamString = function (str) { // key=value;k2=v2&k3=v3
 		}
 	}
 
-	var result = {};
+	result = result || {};
 	str.replace(/([^&;=]+)=([^&;]*)/gi, function (match, key, value) {
 		result[decodeURIComponent(key)] = parse(value);
 	});
