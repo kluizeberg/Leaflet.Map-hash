@@ -9,7 +9,7 @@ L.Map.mergeOptions({
 L.Map.include({
 	_onHashChange: function () {
 		var center;
-		var hash = L.Util.parseParamString(window.location.hash.slice(1));
+		var hash = L.parseParamString(window.location.hash.slice(1));
 		var zoom;
 
 		function isNum(n) {
@@ -28,11 +28,21 @@ L.Map.include({
 
 		if (isNum(hash.zoom)) {
 			zoom = hash.zoom;
-		} else {
-			zoom = this.getZoom();
 		}
 
-		this.setView(center, zoom);
+		this.setView(center, zoom); // (re)sets hash through moveend handler
+	},
+
+	_setHash: function () {
+		var center = this.getCenter();
+		var zoom = this.getZoom();
+		var decimals = 5;
+
+		window.history.replaceState(null, '', '#' + [ // no history
+			'lng='  + center.lng.toFixed(decimals),
+			'lat='  + center.lat.toFixed(decimals),
+			'zoom=' + zoom
+		].join(';'));
 	}
 });
 
@@ -41,17 +51,7 @@ L.Map.addInitHook(function () {
 		this.whenReady(function () {
 			L.DomEvent.on(window, 'hashchange', this._onHashChange, this);
 
-			this.on('moveend', function () {
-				var center = this.getCenter();
-				var zoom = this.getZoom();
-				var decimals = 5;
-
-				window.history.replaceState(null, '', '#' + [ // no history
-					'lng='  + center.lng.toFixed(decimals),
-					'lat='  + center.lat.toFixed(decimals),
-					'zoom=' + zoom
-				].join(';'));
-			});
+			this.on('moveend', this._setHash);
 
 			if (window.location.hash) {
 				this._onHashChange();
@@ -60,9 +60,9 @@ L.Map.addInitHook(function () {
 	}
 });
 
-/* L.Util helper method */
+/* utility/helper method */
 
-L.Util.parseParamString = function (str, result) { // key=value;k2=v2&k3=v3
+L.parseParamString = function (str, result) { // key=value;k2=v2&k3=v3
 	function parse(s) {
 		switch (s) {
 			case 'null':
