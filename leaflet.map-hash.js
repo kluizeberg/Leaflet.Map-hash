@@ -8,13 +8,11 @@ L.Map.mergeOptions({
 
 L.Map.include({
 	_onHashChange: function () {
-		var center;
-		var hash = L.parseParamString(window.location.hash.slice(1));
-		var zoom;
+		const hash = L.parseParamString(window.location.hash.slice(1));
+		const isNum = Number.isFinite;
 
-		function isNum(n) {
-			return typeof n === 'number';
-		}
+		let center;
+		let zoom;
 
 		if (isNum(hash.lng) && isNum(hash.lat)) {
 			center = new L.LatLng(hash.lat, hash.lng);
@@ -34,15 +32,11 @@ L.Map.include({
 	},
 
 	_setHash: function () {
-		var center = this.getCenter();
-		var zoom = this.getZoom();
-		var decimals = 5;
+		const {lat, lng} = this.getCenter();
+		const zoom = this.getZoom();
+		const digits = 5;
 
-		window.history.replaceState(null, '', '#' + [ // no history
-			'lng='  + center.lng.toFixed(decimals),
-			'lat='  + center.lat.toFixed(decimals),
-			'zoom=' + zoom
-		].join(';'));
+		window.history.replaceState(null, '', `#lng=${lng.toFixed(digits)};lat=${lat.toFixed(digits)};zoom=${zoom}`); // no history
 	}
 });
 
@@ -62,7 +56,7 @@ L.Map.addInitHook(function () {
 
 /* utility/helper method */
 
-L.parseParamString = function (str, result) { // key=value;k2=v2&k3=v3
+L.parseParamString = function (str, result = {}) { // key=value;k2=v2&k3=v3
 	function parse(s) {
 		switch (s) {
 			case 'null':
@@ -72,12 +66,11 @@ L.parseParamString = function (str, result) { // key=value;k2=v2&k3=v3
 			case 'true':
 				return true;
 			default:
-				var n = parseFloat(s);
-				return !isNaN(n) && isFinite(s) ? n : decodeURIComponent(s.replace(/\+/g, ' '));
+				const n = parseFloat(s);
+				return Number.isFinite(n) ? n : decodeURIComponent(s.replace(/\+/g, ' '));
 		}
 	}
 
-	result = result || {};
 	str.replace(/([^&;=]+)=([^&;]*)/gi, function (match, key, value) {
 		result[decodeURIComponent(key)] = parse(value);
 	});
